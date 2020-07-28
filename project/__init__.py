@@ -4,10 +4,10 @@ from flask import Flask
 import os
 #from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
+import project.config as Config
 
 def create_app():
     app = Flask(__name__)
-
     #app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
     #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
@@ -35,5 +35,9 @@ def create_app():
     #port = int(os.environ.get('PORT', 5088))
     #app.config["TEMPLATES_AUTO_RELOAD"] = True
     #app.run(host='127.0.0.1', port=port)
+
+    @app.context_processor
+    def inject_stage_and_region():
+        return dict(mrfName = Config.mrfName)
 
     return app
