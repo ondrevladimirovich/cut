@@ -1,12 +1,15 @@
 <!-- templates/login.html -->
 
-{% extends "base.html" %}
+{% extends "base_auth.html" %}
 
 {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <title>СКУТ веб-интерфейс {{ mrfName }}</title>
+
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/auth.js')}}"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
@@ -25,7 +28,6 @@
                             <div>
                                 <input id="login" type="text" placeholder="Введите ваш логин" class="light-yellow-bg form-control">
                                 <div tabindex="-1" role="alert" aria-live="assertive" aria-atomic="true" class="invalid-feedback">Необходимо ввести имя пользователя</div>
-                                <div tabindex="-1" role="alert" aria-live="assertive" aria-atomic="true" class="valid-feedback">:)</div>
                             </div>
                         </div>
 
@@ -33,12 +35,11 @@
                             <label id="passwordGroup__BV_label_" for="password" class="d-block">Пароль:</label>
                             <div>
                                 <input id="password" type="password" placeholder="Введите ваш пароль" class="light-yellow-bg form-control">
-                                <div tabindex="-1" role="alert" aria-live="assertive" aria-atomic="true" class="invalid-feedback">Необходимо ввести имя пароль</div>
-                                <div tabindex="-1" role="alert" aria-live="assertive" aria-atomic="true" class="valid-feedback">:)</div>
+                                <div tabindex="-1" role="alert" aria-live="assertive" aria-atomic="true" class="invalid-feedback">Необходимо ввести пароль</div>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn mb-4 btn-primary btn-block">
+                        <button id="enter" type="submit" class="btn mb-4 btn-primary btn-block">
                             Вход
                         </button>
                     </form>

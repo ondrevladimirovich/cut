@@ -1,19 +1,40 @@
 # main.py
 
-from flask import Blueprint, render_template, jsonify
-from flask_login import login_required, current_user
+from flask import Blueprint, render_template, jsonify, session, request, redirect
 import project.functions as Functions
 
 main = Blueprint('main', __name__)
 
-#auth = False
-
 @main.route('/')
 def index():
-    #if auth == True:
+    if 'user_id' in session:
+        return render_template('index.html')
+    else:
         return render_template('auth.html')
-    #else:
-        #return render_template('index.html')
+
+@main.route('/login', methods=['POST'])
+def login():
+    login = request.form['login']
+    password = request.form['password']
+
+    response = {}
+
+    #найти в БД пользователя по паре-логин пароль
+    user = Functions.get_user(login, password);
+
+    #если нашёлся - записать в сесиию id пользователя и id роли
+    #и перенаправить снова на главную
+    if(user):
+        session['user_id'] = user['id']
+        session['role_id'] = user['role_id']
+        session['name'] = user['name']
+        #return redirect("/")
+        response['result'] = 1
+        response['msg'] = '/'
+    else:
+        response['result'] = 0
+        response['msg'] = 'Пользователь не найден или неверный пароль'
+        return jsonify(response)
 
 #всякие штуки для теста ниже
 
@@ -40,7 +61,9 @@ def test():
     #return jsonify(data)
     return render_template('test.html', data=data)
 
-#@main.route('/profile')
-#@login_required
-#def profile():
-    #return render_template('profile.html', name=current_user.name)
+@main.route('/ses')
+def ses():
+    if 'user_id' in session:
+        return session.get('user_id')
+    else:
+        return 'Nope'
