@@ -2,19 +2,18 @@
 
 from flask import Blueprint, render_template, jsonify
 from flask_login import login_required, current_user
-from flask_bootstrap import Bootstrap
 import project.functions as Functions
 
 main = Blueprint('main', __name__)
 
-auth = False
+#auth = False
 
 @main.route('/')
 def index():
-    if auth == True:
-        return render_template('index.html')
-    else:
-        return render_template('test.html')
+    #if auth == True:
+        return render_template('auth.html')
+    #else:
+        #return render_template('index.html')
 
 #всякие штуки для теста ниже
 

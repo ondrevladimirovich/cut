@@ -4,6 +4,7 @@ from flask import Flask
 import os
 #from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
+from flask_bootstrap import Bootstrap
 import project.config as Config
 
 def create_app():
@@ -39,5 +40,7 @@ def create_app():
     @app.context_processor
     def inject_stage_and_region():
         return dict(mrfName = Config.mrfName)
+
+    Bootstrap(app)
 
     return app

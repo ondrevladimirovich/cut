@@ -1,0 +1,16 @@
+html,
+body {
+    height: 100%;
+}
+
+.bg-light-gray {
+    background-color: #f0f8ff;
+}
+
+.min-height-100vh {
+    min-height: 100vh;
+}
+
+.bg-color-white {
+    background-color: #fff;
+}
