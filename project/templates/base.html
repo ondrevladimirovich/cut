@@ -14,21 +14,45 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
 </head>
 <body>
 
     <div id="app" class="bg-light-gray min-height-100vh">
         <div class="p-0 bg-color-white container">
             <div class="row"><div class="col">
+            {% if user.role_id == 1 %}
                 <nav class="navbar pb-1 pt-1 navbar-dark bg-danger navbar-expand-md">
+            {% else %}
+                <nav class="navbar pb-1 pt-1 navbar-dark bg-dark navbar-expand-md">
+            {% endif %}
                     <a href="/" class="navbar-brand router-link-exact-active router-link-active" target="_self">
                         <img src="{{url_for('static', filename='img/RTLogo.png')}}" height="48" alt="РТ" class="mb-1">
                         <span class="align-middle pb-1">СКУТ МРФ {{ mrfName }}</span>
                     </a>
-                    
-                    <a href="/logout" class="nav-link" target="_self">Выход
-                    </a>
+
+                    <div id="nav_collapse" class="navbar-collapse collapse" style="display: none;">
+                        <ul class="navbar-nav ml-auto">
+                            {% if user.role_id == 1 %}
+                            {% endif %}
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link">
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    {{ user.name }}
+                                </a>
+                            </li>
+                            <li class="nav-item mx-1">
+                                <a href="/logout" class="nav-link" target="_self">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    Выход
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
+                
 
                 {% block content %}
                 {% endblock %}

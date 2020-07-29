@@ -10,7 +10,7 @@ def db_conn():
     cursor = cnxn.cursor()
     return cursor
 
-def get_user(login, password):
+def get_db_user(login, password):
     cursor = db_conn()
     cursor.execute("EXEC [interface].[Login] @login = '" + login + "', @password = '" + password + "';")
 
@@ -24,3 +24,10 @@ def get_user(login, password):
         return user
     else:
         return False
+
+def get_user_object(session):
+    user = {}
+    user['user_id'] = session['user_id']
+    user['role_id'] = session['role_id']
+    user['name'] = session['name']
+    return user

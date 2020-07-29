@@ -8,7 +8,8 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('index.html')
+        user = Functions.get_user_object(session)
+        return render_template('index.html', user = user)
     else:
         return render_template('auth.html')
 
@@ -20,7 +21,7 @@ def login():
     response = {}
 
     #найти в БД пользователя по паре-логин пароль
-    user = Functions.get_user(login, password);
+    user = Functions.get_db_user(login, password);
 
     #если нашёлся - записать в сесиию id пользователя и id роли
     #и перенаправить снова на главную
