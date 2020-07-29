@@ -28,13 +28,13 @@ def login():
         session['user_id'] = user['id']
         session['role_id'] = user['role_id']
         session['name'] = user['name']
-        #return redirect("/")
         response['result'] = 1
         response['msg'] = '/'
     else:
         response['result'] = 0
         response['msg'] = 'Пользователь не найден или неверный пароль'
-        return jsonify(response)
+
+    return jsonify(response)
 
 #всякие штуки для теста ниже
 

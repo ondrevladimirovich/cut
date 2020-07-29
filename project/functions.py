@@ -17,9 +17,9 @@ def get_user(login, password):
 
     if(row):
         user = {}
-        user['id'] = row['Id']
-        user['role_id'] = row['RoleId']
-        user['name'] = row['Name']
+        user['id'] = row[0]
+        user['role_id'] = row[1]
+        user['name'] = row[2]
         return user
     else:
         return False

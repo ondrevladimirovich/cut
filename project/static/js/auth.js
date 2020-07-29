@@ -7,6 +7,15 @@ $(function() {
 
         if(login == '' || password == '') {
             //TODO: сообщение об ошибке
+
+            if(login == '') {
+
+            }
+
+            if(password == '') {
+
+            }
+
             return;
         }
                     
@@ -31,4 +40,11 @@ $(function() {
             
         });
     });
+});
+
+//обработка нажатия enter
+$(document).on('keypress',function(e) {
+    if(e.which === 13) {
+        $('#enter').click();
+    }
 });
