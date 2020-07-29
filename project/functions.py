@@ -12,7 +12,8 @@ def db_conn():
 
 def get_user(login, password):
     cursor = db_conn()
-    cursor.execute("SELECT Id, RoleId, Name FROM [interface].[Users] WHERE Login = '" + login + "' AND Password = '" + password + "';") 
+    cursor.execute("EXEC [interface].[Login] @login = '" + login + "', @password = '" + password + "';")
+
     row = cursor.fetchone() 
 
     if(row):
