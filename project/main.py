@@ -36,6 +36,12 @@ def login():
 
     return jsonify(response)
 
+@main.route('/logout')
+def logout():
+    if 'user_id' in session:
+        session.clear()
+        return redirect('/')
+
 #всякие штуки для теста ниже
 
 @main.route('/sqlversion')
