@@ -2,6 +2,11 @@
 
 {% extends "base.html" %}
 
+{% block head %}
+    <script src="{{url_for('static', filename='js/areas.js')}}"></script>
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/areas.css') }}">-->
+{% endblock %}
+
 {% block content %}
     <div class="row my-3 py-1">
         <div class="col">
