@@ -8,7 +8,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     if 'user_id' in session:
-        current_user = Functions.get_user_object(session)
+        current_user = Functions.get_current_user_object(session)
         return render_template('index.html', current_user = current_user)
     else:
         return render_template('auth.html')
@@ -46,7 +46,7 @@ def logout():
 @main.route('/users')
 def users():
     if 'user_id' in session:
-        current_user = Functions.get_user_object(session)
+        current_user = Functions.get_current_user_object(session)
 
         if current_user['role_id'] == 1:
             interface_users = Functions.get_interface_users()
@@ -59,7 +59,7 @@ def users():
 @main.route('/areas')
 def areas():
     if 'user_id' in session:
-        current_user = Functions.get_user_object(session)
+        current_user = Functions.get_current_user_object(session)
 
         if current_user['role_id'] == 1:
             return render_template('areas.html', current_user = current_user)

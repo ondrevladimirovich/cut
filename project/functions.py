@@ -1,6 +1,7 @@
 import pyodbc
 import project.config as Config
 
+# установка соединения с БД
 def db_conn():
     server = Config.server
     database = Config.database
@@ -10,6 +11,7 @@ def db_conn():
     cursor = cnxn.cursor()
     return cursor
 
+# поиск пользователя в БД для логина
 def get_db_user(login, password):
     cursor = db_conn()
     cursor.execute("EXEC [interface].[Login] @login = '" + login + "', @password = '" + password + "';")
@@ -25,13 +27,15 @@ def get_db_user(login, password):
     else:
         return False
 
-def get_user_object(session):
-    user = {}
-    user['user_id'] = session['user_id']
-    user['role_id'] = session['role_id']
-    user['name'] = session['name']
-    return user
+# получение из сессии текущего пользователя в удобном виде
+def get_current_user_object(session):
+    current_user = {}
+    current_user['user_id'] = session['user_id']
+    current_user['role_id'] = session['role_id']
+    current_user['name'] = session['name']
+    return current_user
 
+# вызов ХП на получение всех пользователей
 def get_interface_users():
     data = []
     cursor = db_conn()
@@ -44,12 +48,17 @@ def get_interface_users():
         user['role_id'] = row[2]
         user['name'] = row[3]
         user['surname'] = row[4]
-        user['patronymic'] = row[5]
-        user['email'] = row[6] 
-        user['comment'] = row[7]
-        user['company'] = row[8]
-        user['department'] = row[9]
-        user['position'] = row[10]
+        user['patronymic'] = var_none_check(row[5])
+        user['email'] = var_none_check(row[6])
+        user['comment'] = var_none_check(row[7])
+        user['company'] = var_none_check(row[8])
+        user['department'] = var_none_check(row[9])
+        user['position'] = var_none_check(row[10])
         data.append(user)
 
     return data
+
+#проверить переменную на значение None
+#возвращается пустая строка если None
+def var_none_check(var):
+    return var if var else ''
