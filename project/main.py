@@ -43,6 +43,30 @@ def logout():
         session.clear()
         return redirect('/')
 
+@main.route('/users')
+def users():
+    if 'user_id' in session:
+        user = Functions.get_user_object(session)
+
+        if user['role_id'] == 1:
+            return render_template('users.html', user = user)
+        else:
+            return render_template('index.html', user = user)
+    else:
+        return render_template('auth.html')
+
+@main.route('/areas')
+def areas():
+    if 'user_id' in session:
+        user = Functions.get_user_object(session)
+
+        if user['role_id'] == 1:
+            return render_template('areas.html', user = user)
+        else:
+            return render_template('index.html', user = user)
+    else:
+        return render_template('auth.html')
+
 #всякие штуки для теста ниже
 
 @main.route('/sqlversion')
