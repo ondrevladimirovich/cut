@@ -5,17 +5,12 @@ $(function() {
         let login = $('#login').val();
         let password = $('#password').val();
 
-        if(login == '' || password == '') {
-            //TODO: сообщение об ошибке
+        //TODO: сообщение об ошибке
+        if(login == '') {
+            return;
+        }
 
-            if(login == '') {
-
-            }
-
-            if(password == '') {
-
-            }
-
+        if(password == '') {
             return;
         }
                     

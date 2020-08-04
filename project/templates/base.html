@@ -11,6 +11,7 @@
 
     <script src="{{url_for('static', filename='js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/auth.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
@@ -34,6 +35,36 @@
                     <div id="nav_collapse" class="navbar-collapse collapse" style="display: none;">
                         <ul class="navbar-nav ml-auto">
                             {% if user.role_id == 1 %}
+                            <li class="nav-item b-nav-dropdown dropdown h-100 mx-1 dropdown pull-right">
+                                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                    Управление
+                                  <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li role="presentation">
+                                        <a href="/users" class="dropdown-item" role="menuitem" target="_self">
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                            Пользователи
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="/areas" class="dropdown-item" role="menuitem" target="_self">
+                                        <i class="fa fa-users" aria-hidden="true"></i> <!--TODO: найти аналог иконки -->
+                                            Зоны эксплуатации
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% endif %}
+
+                            {% if user.role_id != 1 %}
+                            <li title="Зоны обслуживания" class="nav-item user-areas-nav-text">
+                                <a target="_self" href="#" class="nav-link">
+                                    <i class='fa fa-layer-group'></i> <!--TODO: найти аналог иконки -->
+                                    0
+                                </a>
+                            </li>
                             {% endif %}
                         </ul>
                         <ul class="navbar-nav ml-auto">
