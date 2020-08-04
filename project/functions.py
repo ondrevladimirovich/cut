@@ -58,6 +58,22 @@ def get_interface_users():
 
     return data
 
+# вызов ХП с информацией для таба "филиалы"
+def get_regions_for_tab():
+    data = []
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[GetRegions];")
+    rows = cursor.fetchall()
+    for row in rows:
+        region = {}
+        region['name'] = row[0]
+        region['total'] = row[1]
+        region['available'] = row[2]
+        region['percent'] = round(float(row[2] / row[1]) * 100, 2)
+        data.append(region)
+
+    return data
+
 #проверить переменную на значение None
 #возвращается пустая строка если None
 def var_none_check(var):

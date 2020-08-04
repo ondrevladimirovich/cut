@@ -15,11 +15,11 @@
             </div>
             <div class="col">
                 <strong class="mr-2">Филиалов:</strong>
-                <span class="badge badge-secondary">10</span>
+                <span class="badge badge-secondary">{{ data['regions'] | count }}</span>
             </div>
             <div class="col">
                 <strong class="mr-2">Таксофонов:</strong>
-                <span class="badge badge-secondary">25824</span>
+                <span class="badge badge-secondary">{{ data['regions'] | sum(attribute='total') }}</span>
             </div>
             <div class="d-flex justify-content-end col-2">
                 <button id="refresh_data" type="button" class="btn btn-outline-info border-0 btn-sm">
@@ -64,7 +64,7 @@
                                     Филиалы
                                     <span class="mx-3">
                                         <span class="badge badge-secondary badge-pill">
-                                            10
+                                            {{ data['regions'] | count }}
                                         </span>
                                     </span>
                                 </a>
@@ -76,7 +76,7 @@
                                     Устройства
                                     <span class="mx-3">
                                         <span class="badge badge-secondary badge-pill">
-                                            25824
+                                            {{ data['regions'] | sum(attribute='total') }}
                                         </span>
                                     </span>
                                 </a>
@@ -88,7 +88,7 @@
                                     Типы оборудования
                                     <span class="mx-3">
                                         <span class="badge badge-secondary badge-pill">
-                                            4
+                                            -1 <!--TODO: не забыть-->
                                         </span>
                                     </span>
                                 </a>
@@ -112,7 +112,46 @@
 
                     <div class="tab-content" id="tabs_container">
                         <div class="tab-pane fade show active" id="regions_tab">
-                            <p>ФИЛИАЛЫ</p>
+                            <div>
+                                <table role="table" aria-busy="false" aria-colcount="4" class="table b-table mt-3 table-sm" id="regions_table">
+                                    <thead>
+                                        <tr>
+                                            <!--<th role="columnheader" scope="col" aria-colindex="1" aria-label="Is Selected" class="align-middle" style="width: 50px !important;">
+                                                <div data-v-baf8c540="" class="flex-vertical-center flex-center">
+                                                    <div data-v-baf8c540="" class="mx-2 custom-control custom-checkbox">
+                                                        <input type="checkbox" autocomplete="off" class="custom-control-input" value="true" id="__BVID__45">
+                                                        <label class="custom-control-label" for="__BVID__45">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th>-->
+                                            <th role="columnheader" scope="col" aria-colindex="1" class="align-middle">Филиал</th>
+                                            <th role="columnheader" scope="col" aria-colindex="2" class="align-middle">Доступность</th>
+                                            <!--<th role="columnheader" scope="col" aria-colindex="3" class="align-middle">Лотов</th>--> <!--считаю этот показатель бесполезным-->
+                                            <th role="columnheader" scope="col" aria-colindex="3" class="align-middle">Устройств</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for region in data['regions'] %}
+                                        <tr>
+                                            <td aria-colindex="1" role="cell" class="align-middle">
+                                                <i class="fa fa-building" aria-hidden="true"></i>
+                                                {{ region['name'] }}
+                                            </td>
+                                            
+                                            <!--TODO: рисовать полоску с доступностью и красить её в различиные цвета -->
+                                            <td aria-colindex="2" role="cell" class="align-middle">
+                                                {{ region['percent'] }}
+                                            </td>
+
+                                            <td aria-colindex="3" role="cell" class="align-middle">
+                                                {{ region['total'] }}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>    
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="devices_tab">

@@ -8,8 +8,10 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     if 'user_id' in session:
-        current_user = Functions.get_current_user_object(session)
-        return render_template('index.html', current_user = current_user)
+        data = {}
+        data['current_user'] = Functions.get_current_user_object(session)
+        data['regions'] = Functions.get_regions_for_tab()
+        return render_template('index.html', data = data)
     else:
         return render_template('auth.html')
 
@@ -46,25 +48,27 @@ def logout():
 @main.route('/users')
 def users():
     if 'user_id' in session:
-        current_user = Functions.get_current_user_object(session)
+        data = {}
+        data['current_user'] = Functions.get_current_user_object(session)
 
-        if current_user['role_id'] == 1:
-            interface_users = Functions.get_interface_users()
-            return render_template('users.html', current_user = current_user, interface_users = interface_users)
+        if data['current_user']['role_id'] == 1:
+            data['interface_users'] = Functions.get_interface_users()
+            return render_template('users.html', data = data)
         else:
-            return render_template('index.html', current_user = current_user)
+            return render_template('index.html', data = data)
     else:
         return render_template('auth.html')
 
 @main.route('/areas')
 def areas():
     if 'user_id' in session:
-        current_user = Functions.get_current_user_object(session)
+        data = {}
+        data['current_user'] = Functions.get_current_user_object(session)
 
-        if current_user['role_id'] == 1:
-            return render_template('areas.html', current_user = current_user)
+        if data['current_user']['role_id'] == 1:
+            return render_template('areas.html', data = data)
         else:
-            return render_template('index.html', current_user = current_user)
+            return render_template('index.html', data = data)
     else:
         return render_template('auth.html')
 
