@@ -3,7 +3,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
-        <h1>Test</h1>
+    <div class="row my-3 py-1">
+        <div class="col">
+            <h2>Управление пользователями</h2>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="ml-auto col-auto">
+            <button id="create_user" type="button" class="btn btn-outline-success">
+            Создать пользователя
+            </button>
+        </div>
+    </div>
+
+    <div class="row mb-3 py-3">
+        <div class="col">
+            <table role="table" aria-busy="false" aria-colcount="7" class="table b-table table-sm">
+                <thead role="rowgroup" class="">
+                    <tr role="row" class="">
+                        <th role="columnheader" scope="col" aria-colindex="1" class="">ID</th>
+                        <th role="columnheader" scope="col" aria-colindex="2" class="">Логин</th>
+                        <th role="columnheader" scope="col" aria-colindex="3" class="">Фамилия</th>
+                        <th role="columnheader" scope="col" aria-colindex="4" class="">Имя</th>
+                        <th role="columnheader" scope="col" aria-colindex="5" class="">Отчество</th>
+                        <th role="columnheader" scope="col" aria-colindex="6" class="">Роль</th>
+                        <th role="columnheader" scope="col" aria-colindex="7" class="">Действия</th>
+                    </tr>
+                </thead>
+                <tbody role="rowgroup">
+                    <tr role="row" class="">
+                        {% for user in interface_users %}
+                            <td aria-colindex="1" role="cell" class="">{{ user['id'] }}</td>
+                            <td aria-colindex="1" role="cell" class="">{{ user['login'] }}</td>
+                            <td aria-colindex="1" role="cell" class="">{{ user['surname'] }}</td>
+                            <td aria-colindex="1" role="cell" class="">{{ user['name'] }}</td>
+                            <td aria-colindex="1" role="cell" class="">{{ user['patronymic'] }}</td>
+                            <td aria-colindex="1" role="cell" class=""></td> <!--TODO: тут название роли-->
+                            <td aria-colindex="1" role="cell" class="">
+                                <div role="group" class="btn-group">
+                                    <button id="edit_user" title="Изменить пользовательские данные" type="button" class="btn btn-outline-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                    <button id="info_user" title="Информация о пользователе" type="button" class="btn btn-outline-info btn-sm"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                    {% if user['role_id'] != 1 %} <!-- не разрешаем удалять администраторские учётки -->
+                                        <button id="delete_user" title="Удалить пользователя" type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

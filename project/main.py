@@ -8,8 +8,8 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     if 'user_id' in session:
-        user = Functions.get_user_object(session)
-        return render_template('index.html', user = user)
+        current_user = Functions.get_user_object(session)
+        return render_template('index.html', current_user = current_user)
     else:
         return render_template('auth.html')
 
@@ -21,14 +21,14 @@ def login():
     response = {}
 
     #найти в БД пользователя по паре-логин пароль
-    user = Functions.get_db_user(login, password);
+    current_user = Functions.get_db_user(login, password);
 
     #если нашёлся - записать в сесиию id пользователя и id роли
     #и перенаправить снова на главную
-    if(user):
-        session['user_id'] = user['id']
-        session['role_id'] = user['role_id']
-        session['name'] = user['name']
+    if(current_user):
+        session['user_id'] = current_user['id']
+        session['role_id'] = current_user['role_id']
+        session['name'] = current_user['name']
         response['result'] = 1
         response['msg'] = '/'
     else:
@@ -46,24 +46,25 @@ def logout():
 @main.route('/users')
 def users():
     if 'user_id' in session:
-        user = Functions.get_user_object(session)
+        current_user = Functions.get_user_object(session)
 
-        if user['role_id'] == 1:
-            return render_template('users.html', user = user)
+        if current_user['role_id'] == 1:
+            interface_users = Functions.get_interface_users()
+            return render_template('users.html', current_user = current_user, interface_users = interface_users)
         else:
-            return render_template('index.html', user = user)
+            return render_template('index.html', current_user = current_user)
     else:
         return render_template('auth.html')
 
 @main.route('/areas')
 def areas():
     if 'user_id' in session:
-        user = Functions.get_user_object(session)
+        current_user = Functions.get_user_object(session)
 
-        if user['role_id'] == 1:
-            return render_template('areas.html', user = user)
+        if current_user['role_id'] == 1:
+            return render_template('areas.html', current_user = current_user)
         else:
-            return render_template('index.html', user = user)
+            return render_template('index.html', current_user = current_user)
     else:
         return render_template('auth.html')
 
