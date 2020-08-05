@@ -29,6 +29,14 @@
             </div>
         </div>
 
+        {% set total_percent = (data['regions'] | sum(attribute='percent') / data['regions'] | count) | round(2) %}
+        {% set total_percent_color = 'danger' %}
+        {% if (total_percent >= 95 and total_percent <= 95.5) %}
+        {% set total_percent_color = 'warning' %}
+        {% elif total_percent > 95.5 %}
+        {% set total_percent_color = 'success' %}
+        {% endif %}
+
         <div class="row mt-2 mb-3 py-3 bg-light rounded border row-panel align-items-center">
             <div class="col-2">
                 <strong class="mr-1">Доступность:</strong>
@@ -37,14 +45,14 @@
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <div class="pr-0 text-right font-weight-bold percentWidth col-auto">
-                            <span class="text-right text-success">
-                                96.53% <!--TODO: проценты доступности-->
+                            <span class="text-right text-{{ total_percent_color }}">
+                                {{ total_percent }}%
                             </span>
                         </div>
 
                         <div class="pl-2 progressWidth col">
-                            <div class="border progress border-success">
-                                <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="96.53" class="progress-bar bg-success" style="width: 96.53%;"> <!--TODO: проценты доступности-->
+                            <div class="border progress border-{{ total_percent_color }}">
+                                <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ total_percent }}" class="progress-bar bg-{{ total_percent_color }}" style="width:{{ total_percent }}%;">
                                 </div>
                             </div>
                         </div>

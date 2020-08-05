@@ -59,6 +59,7 @@ def get_interface_users():
     return data
 
 # вызов ХП с информацией для таба "филиалы"
+# TODO: ПЕРЕДАВТЬ id пользователя и выводить данные только касающиеся его устройств [или регионов - тут пока не ясно]
 def get_regions_for_tab():
     data = []
     cursor = db_conn()
