@@ -31,10 +31,11 @@
 
         {% set total_percent = (data['regions'] | sum(attribute='percent') / data['regions'] | count) | round(2) %}
         {% set total_percent_color = 'danger' %}
+
         {% if (total_percent >= 95 and total_percent <= 95.5) %}
-        {% set total_percent_color = 'warning' %}
+            {% set total_percent_color = 'warning' %}
         {% elif total_percent > 95.5 %}
-        {% set total_percent_color = 'success' %}
+            {% set total_percent_color = 'success' %}
         {% endif %}
 
         <div class="row mt-2 mb-3 py-3 bg-light rounded border row-panel align-items-center">
@@ -147,9 +148,32 @@
                                                 {{ region['name'] }}
                                             </td>
                                             
-                                            <!--TODO: рисовать полоску с доступностью и красить её в различиные цвета -->
                                             <td aria-colindex="2" role="cell" class="align-middle">
-                                                {{ region['percent'] }}
+                                                {% set region_percent = region['percent'] | float %}
+                                                {% set region_percent_color = 'danger' %}
+                                                
+                                                {% if (region_percent >= 95 and region_percent <= 95.5) %}
+                                                    {% set region_percent_color = 'warning' %}
+                                                {% elif region_percent > 95.5 %}
+                                                    {% set region_percent_color = 'success' %}
+                                                {% endif %}
+                                                <div class="row justify-content-center">
+                                                    <div style="overflow:auto;width:100%;">
+                                                        <div style="display:inline-block;width:75px;">
+                                                            <div class="pr-0 text-left font-weight-bold percentWidth col-auto">
+                                                                <span class="text-left text-{{ region_percent_color }}">
+                                                                    {{ region_percent }}%
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="display:inline-block;width:125px;">
+                                                            <div class="border progress border-{{ region_percent_color }}">
+                                                                <div  aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ region_percent }}" class="progress-bar bg-{{ region_percent_color }}" style="width:{{ region_percent }}%;">
+                                                                </div>
+                                                            </div>
+                                                        </div>                                           
+                                                    </div>
+                                                </div>
                                             </td>
 
                                             <td aria-colindex="3" role="cell" class="align-middle">
