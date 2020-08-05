@@ -7,13 +7,13 @@ $(function() {
         $('#createModal').modal('show');
     });
 
-    $('#edit_user').on('click', function(e){
+    $('.edit_user').on('click', function(e){
         e.preventDefault();
 
         let user_id = $(this).data('user_id');
     });
 
-    $('#info_user').on('click', function(e){
+    $('.info_user').on('click', function(e){
         e.preventDefault();
 
         let user_id = $(this).data('user_id');
@@ -21,7 +21,7 @@ $(function() {
         alert(user_id);
     });
 
-    $('#delete_user').on('click', function(e){
+    $('.delete_user').on('click', function(e){
         e.preventDefault();
 
         user_id_to_delete = $(this).data('user_id');
@@ -131,14 +131,16 @@ $(function() {
                 console.log(resp);
                 if(resp.result == 1) {
                     //window.location.href = resp.msg;
+                    //TODO: перезагрузить список
                 }
                 else {
                     //TODO: сообщение об ошибке
                     console.log(resp.msg);
                 }
             }
-            
         });
+
+        $('#createModal').modal('hide');
     });
 
     //удаление
@@ -166,6 +168,7 @@ $(function() {
                 console.log(resp);
                 if(resp.result == 1) {
                     //window.location.href = resp.msg;
+                    //TODO: перезагрузить список
                 }
                 else {
                     //TODO: сообщение об ошибке
@@ -173,5 +176,7 @@ $(function() {
                 }
             }
         });
+
+        $('#deleteModal').modal('hide');
     });
 });

@@ -48,14 +48,14 @@
                             <td aria-colindex="1" role="cell" class="">{{ user['role_name'] }}</td>
                             <td aria-colindex="1" role="cell" class="">
                                 <div role="group" class="btn-group">
-                                    <button id="edit_user" title="Изменить пользовательские данные" type="button" data-user_id="{{ user['id'] }}" class="btn btn-outline-warning btn-sm">
+                                    <button title="Изменить пользовательские данные" type="button" data-user_id="{{ user['id'] }}" class="btn btn-outline-warning btn-sm edit_user">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </button>
-                                    <button id="info_user" title="Информация о пользователе" type="button" data-user_id="{{ user['id'] }}" class="btn btn-outline-info btn-sm">
+                                    <button title="Информация о пользователе" type="button" data-user_id="{{ user['id'] }}" class="btn btn-outline-info btn-sm info_user">
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </button>
                                     {% if user['role_id'] != 1 %} <!-- не разрешаем удалять администраторские учётки -->
-                                        <button id="delete_user" title="Удалить пользователя" type="button" data-user_id="{{ user['id'] }}" data-user_login="{{ user['login'] }}" class="btn btn-outline-danger btn-sm">
+                                        <button title="Удалить пользователя" type="button" data-user_id="{{ user['id'] }}" data-user_login="{{ user['login'] }}" class="btn btn-outline-danger btn-sm delete_user">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
                                     {% endif %}
