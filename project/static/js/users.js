@@ -77,7 +77,7 @@ $(function() {
 
         let password = $('#passwordInput').val();
 
-        if(passwod == '') {
+        if(password == '') {
             return;
         }
 
@@ -106,5 +106,36 @@ $(function() {
         let department = $('#departmentInput').val();
         let position = $('#positionInput').val();
         let commentary = $('#commentaryInput').val();
+
+        $.ajax({
+            url: '/create_user_ajax',
+            type: 'POST',
+            data: 
+            {
+                login: login, 
+                password: password,
+                role_id,
+                name: name,
+                surname: surname,
+                patronymic: patronymic,
+                email: email,
+                company: company,
+                department: department,
+                position: position,
+                commentary: commentary
+            },
+        
+            success: function(resp) {
+                console.log(resp);
+                if(resp.result == 1) {
+                    //window.location.href = resp.msg;
+                }
+                else {
+                    //TODO: сообщение об ошибке
+                    console.log(resp.msg);
+                }
+            }
+            
+        });
     });
 });

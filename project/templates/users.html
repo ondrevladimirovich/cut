@@ -38,8 +38,8 @@
                     </tr>
                 </thead>
                 <tbody role="rowgroup">
-                    <tr role="row" class="">
-                        {% for user in data['interface_users'] %}
+                    {% for user in data['interface_users'] %}
+                        <tr role="row" class="">
                             <td aria-colindex="1" role="cell" class="">{{ user['id'] }}</td>
                             <td aria-colindex="1" role="cell" class="">{{ user['login'] }}</td>
                             <td aria-colindex="1" role="cell" class="">{{ user['surname'] }}</td>
@@ -61,8 +61,8 @@
                                     {% endif %}
                                 </div>
                             </td>
-                        {% endfor %}
-                    </tr>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -73,3 +73,9 @@ def areas():
             return render_template('index.html', data = data)
     else:
         return render_template('auth.html')
+
+# AJAX
+@main.route('/create_user_ajax', methods=['POST'])
+def create_user_ajax():
+    response = Functions.create_user(request.form)
+    return response

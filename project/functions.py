@@ -106,3 +106,31 @@ def get_system_roles():
 #возвращается пустая строка если None
 def var_none_check(var):
     return var if var else ''
+
+
+#AJAX
+def create_user(params):
+    data = {}
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[CreateUser] @login = '" + params['login'] 
+        + "', @roleId = " + str(params['role_id']) 
+        + ", @name = '" + params['name'] 
+        + "', @surname = '" + params['surname'] 
+        + "', @patronymic = '" + params['patronymic'] 
+        + "', @email = '" + params['email'] 
+        + "', @comment = '" + params['commentary'] 
+        + "', @department = '" + params['department'] 
+        + "', @position = '" + params['position'] 
+        + "', @password = '" + params['password'] + "';")
+
+    result = cursor.fetchone()
+    cursor.commit()
+
+    if(result):
+        data['msg'] = result[0]
+        data['result'] = result[1]
+    else:
+        data['msg'] = 'Неизвестная ошибка'
+        data['result'] = 0
+
+    return data
