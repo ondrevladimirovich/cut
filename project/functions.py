@@ -59,11 +59,11 @@ def get_interface_users():
     return data
 
 # вызов ХП с информацией для таба "филиалы"
-# TODO: ПЕРЕДАВТЬ id пользователя и выводить данные только касающиеся его устройств [или регионов - тут пока не ясно]
-def get_regions_for_tab():
+# TODO: выводить данные только касающиеся его устройств [или регионов - тут пока не ясно] - актуально на стороне ХП
+def get_regions_for_tab(user_id):
     data = []
     cursor = db_conn()
-    cursor.execute("EXEC [interface].[GetRegions];")
+    cursor.execute("EXEC [interface].[GetRegions] @user_id =" + str(user_id) + ";")
     rows = cursor.fetchall()
     for row in rows:
         region = {}
@@ -74,6 +74,20 @@ def get_regions_for_tab():
         data.append(region)
 
     return data
+
+def get_device_types_for_tab(user_id):
+    data = []
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[GetDeviceTypes] @user_id =" + str(user_id) + ";")
+    rows = cursor.fetchall()
+    for row in rows:
+        device_type = {}
+        device_type['name'] = row[0]
+        device_type['total'] = row[1]
+        data.append(device_type)
+
+    return data
+
 
 #проверить переменную на значение None
 #возвращается пустая строка если None

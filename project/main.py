@@ -10,7 +10,8 @@ def index():
     if 'user_id' in session:
         data = {}
         data['current_user'] = Functions.get_current_user_object(session)
-        data['regions'] = Functions.get_regions_for_tab()
+        data['regions'] = Functions.get_regions_for_tab(session['user_id'])
+        data['device_types'] = Functions.get_device_types_for_tab(session['user_id'])
         return render_template('index.html', data = data)
     else:
         return render_template('auth.html')
@@ -71,35 +72,3 @@ def areas():
             return render_template('index.html', data = data)
     else:
         return render_template('auth.html')
-
-#всякие штуки для теста ниже
-
-@main.route('/sqlversion')
-def sqlversion():
-    cursor = Functions.db_conn()
-    cursor.execute("SELECT @@version;") 
-    row = cursor.fetchone() 
-    #while row: 
-        #print(row[0])
-        #row = cursor.fetchone()
-
-    return jsonify(row[0])
-
-@main.route('/test')
-def test():
-    data = []
-    cursor = Functions.db_conn()
-    cursor.execute("SELECT Description FROM SUBSYSTEMS;")
-    rows = cursor.fetchall()
-    for row in rows:
-        data.append([x for x in row])
-
-    #return jsonify(data)
-    return render_template('test.html', data=data)
-
-@main.route('/ses')
-def ses():
-    if 'user_id' in session:
-        return session.get('user_id')
-    else:
-        return 'Nope'

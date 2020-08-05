@@ -97,7 +97,7 @@
                                     Типы оборудования
                                     <span class="mx-3">
                                         <span class="badge badge-secondary badge-pill">
-                                            -1 <!--TODO: не забыть-->
+                                            {{ data['device_types'] | count }}
                                         </span>
                                     </span>
                                 </a>
@@ -191,7 +191,28 @@
                         </div>
 
                         <div class="tab-pane fade" id="types_tab">
-                            <p>ТИПЫ ОБОРУДОВАНИЯ</p>
+                            <div>
+                                <table role="table" aria-busy="false" aria-colcount="4" class="table b-table mt-3 table-sm" id="regions_table">
+                                    <thead>
+                                        <tr>
+                                            <th role="columnheader" scope="col" aria-colindex="1" class="align-middle">Модель</th>
+                                            <th role="columnheader" scope="col" aria-colindex="2" class="align-middle">Количество</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for device_type in data['device_types'] %}
+                                        <tr>
+                                            <td aria-colindex="1" role="cell" class="align-middle">
+                                                {{ device_type['name'] }}
+                                            </td>
+                                            <td aria-colindex="2" role="cell" class="align-middle">
+                                                {{ device_type['total'] }}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="map_tab">
