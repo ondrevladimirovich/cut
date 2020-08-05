@@ -14,6 +14,27 @@ $(function() {
     // Now add the layer onto the map
     map.addLayer(layer);
 
+    $.ajax({
+        url: '/get_devices_for_map_ajax',
+        type: 'POST',
+        data: 
+        {
+        },
+    
+        success: function(resp) {
+            if(resp.result == 1) {
+                resp.devices.forEach( (device) => {
+                    if(device.latitude != '' && device.longitude !== '')
+                        L.marker([device.latitude, device.longitude]).addTo(map)
+                });
+            }
+            else {
+                //TODO: сообщение об ошибке
+                console.log(resp.msg);
+            }
+        }
+    });
+
     $('#refresh_data').on('click', function(e){
         e.preventDefault();
 

@@ -187,7 +187,67 @@
                         </div>
 
                         <div class="tab-pane fade" id="devices_tab">
-                            <p>УСТРОЙСТВА</p>
+                            <div>
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+
+                                <table role="table" aria-busy="false" aria-colcount="9" class="table b-table table-sm" id="devices_table">
+                                    <thead role="rowgroup" class="">
+                                        <tr role="row" class="">
+                                            <th role="columnheader" scope="col" aria-colindex="1" class="" style="min-width: 7rem;">
+                                                Устройство
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="2" class="" style="min-width: 8rem;">
+                                                Доступность
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="3" class="" style="min-width: 9rem;">
+                                                ID
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="4" class="" style="min-width: 8rem;">
+                                                Абонентский номер
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="5" class="" style="min-width: 8rem;">
+                                                Тип линии связи
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="6" class="" style="min-width: 5rem;">
+                                                Версия ПО
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="7" class="" style="min-width: 14rem;">
+                                                Адрес
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="8" class="">
+                                                Последняя отзвонка
+                                            </th>
+                                            <th role="columnheader" scope="col" aria-colindex="9" class="">
+                                                Статус
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for device in data['devices'] %}
+                                        <tr role="row">
+                                            <td aria-colindex="1" role="cell">
+                                                <i class="fa fa-phone-square" aria-hidden="true"></i> 
+                                                {{ device['phone_type'] }}
+                                            </td>
+                                            <td aria-colindex="2" role="cell"> {{ device['month_availability'] }}</td>
+                                            <td aria-colindex="3" role="cell"> {{ device['id'] }}</td>
+                                            <td aria-colindex="4" role="cell"> {{ device['number'] }}</td>
+                                            <td aria-colindex="5" role="cell"> {{ device['line_type'] }}</td>
+                                            <td aria-colindex="6" role="cell"> {{ device['sw_version'] }}</td>
+                                            <td aria-colindex="7" role="cell"> {{ device['address'] }}</td>
+                                            <td aria-colindex="8" role="cell"> {{ device['last_call_date'] }}</td>
+                                            <td aria-colindex="9" role="cell"> {{ device['state'] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                <div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="types_tab">
@@ -203,6 +263,7 @@
                                         {% for device_type in data['device_types'] %}
                                         <tr>
                                             <td aria-colindex="1" role="cell" class="align-middle">
+                                                <i class="fa fa-phone-square" aria-hidden="true"></i> 
                                                 {{ device_type['name'] }}
                                             </td>
                                             <td aria-colindex="2" role="cell" class="align-middle">

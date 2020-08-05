@@ -13,6 +13,8 @@ def index():
         data = {}
         data['current_user'] = Functions.get_current_user_object(session)
         data['regions'] = Functions.get_regions_for_tab(session['user_id'])
+        data['devices'] = Functions.get_devices_for_tab(session['user_id'])
+        #data['devices_on_map'] = Functions.get_devices_for_map_tab(session['user_id'])
         data['device_types'] = Functions.get_device_types_for_tab(session['user_id'])
         return render_template('index.html', data = data)
     else:
@@ -53,6 +55,7 @@ def areas():
         return render_template('auth.html')
 
 # AJAX
+
 @main.route('/login', methods=['POST'])
 def login():
     login = request.form['login']
@@ -86,3 +89,9 @@ def create_user_ajax():
 def delete_user_ajax():
     response = Functions.delete_user(request.form)
     return response
+
+@main.route('/get_devices_for_map_ajax', methods=['POST'])
+def get_devices_for_map_ajax():
+    #response = Functions.get_devices_for_map_tab(request.form)
+    response = Functions.get_devices_for_map_tab(session['user_id'])
+    return jsonify(response)

@@ -83,11 +83,55 @@ def get_device_types_for_tab(user_id):
     rows = cursor.fetchall()
     for row in rows:
         device_type = {}
-        device_type['name'] = row[0]
-        device_type['total'] = row[1]
+        device_type['name'] = var_none_check(row[0])
+        device_type['total'] = var_none_check(row[1])
         data.append(device_type)
 
     return data
+
+def get_devices_for_tab(user_id):
+    data = []
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[GetDevices] @user_id =" + str(user_id) + ";")
+    rows = cursor.fetchall()
+    for row in rows:
+        device = {}
+        device['phone_type'] = var_none_check(row[0])
+        device['month_availability'] = var_none_check(row[1])
+        device['id'] = var_none_check(row[2])
+        device['number'] = var_none_check(row[3])
+        device['line_type_id'] = var_none_check(row[4])
+        device['line_type'] = var_none_check(row[5])
+        device['sw_version'] = var_none_check(row[6])
+        device['address'] = var_none_check(row[7])
+        device['last_call_date'] = var_none_check(row[8])
+        device['state'] = var_none_check(row[9])
+        device['photo_count'] = var_none_check(row[10])
+        data.append(device)
+
+    return data
+
+def get_devices_for_map_tab(user_id):
+    data = {}
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[GetDevicesForMap] @user_id =" + str(user_id) + ";")
+    rows = cursor.fetchall()
+
+    devices = []
+    for row in rows:
+        device = {}
+        device['id'] = var_none_check(row[0])
+        device['address'] = var_none_check(row[1])
+        device['latitude'] = var_none_check(row[2])
+        device['longitude'] = var_none_check(row[3])
+        devices.append(device)
+
+    data['msg'] = ''
+    data['result'] = 1
+    data['devices'] = devices
+
+    return data
+    
 
 def get_system_roles():
     data = []
@@ -147,7 +191,7 @@ def delete_user(params):
         data['msg'] = ''
         data['result'] = 1
     else:
-        data['msg'] = 'Неизвестная ошибка'
+        data['msg'] = 'Указанного пользователя уже нет в БД'
         data['result'] = 0
 
     return data
