@@ -1,4 +1,6 @@
 $(function() {
+    let user_id_to_delete, user_login_to_delete;
+
     $('#create_user').on('click', function(e){
         e.preventDefault();
 
@@ -9,8 +11,6 @@ $(function() {
         e.preventDefault();
 
         let user_id = $(this).data('user_id');
-
-        alert(user_id);
     });
 
     $('#info_user').on('click', function(e){
@@ -24,11 +24,13 @@ $(function() {
     $('#delete_user').on('click', function(e){
         e.preventDefault();
 
-        let user_id = $(this).data('user_id');
+        user_id_to_delete = $(this).data('user_id');
+        user_login_to_delete = $(this).data('user_login');
 
-        alert(user_id);
+        $('#deleteModal').modal('show');
     });
 
+    //создание
     //здесь очистить поля модалки после закрытия
     $('#createModal').on('hidden.bs.modal', function () {
         $('#loginInput').val('');
@@ -136,6 +138,40 @@ $(function() {
                 }
             }
             
+        });
+    });
+
+    //удаление
+    $('#deleteModal').on('shown.bs.modal', function () {
+        $('#delete_text').text('Действительно удалить пользователя ' + user_login_to_delete + '?');
+    });
+
+    $('#createModal').on('hidden.bs.modal', function () {
+        user_login_to_delete = undefined;
+        user_id_to_delete = undefined;
+    });
+
+    $('#delete_user_confirm').on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/delete_user_ajax',
+            type: 'POST',
+            data: 
+            {
+                id: user_id_to_delete
+            },
+        
+            success: function(resp) {
+                console.log(resp);
+                if(resp.result == 1) {
+                    //window.location.href = resp.msg;
+                }
+                else {
+                    //TODO: сообщение об ошибке
+                    console.log(resp.msg);
+                }
+            }
         });
     });
 });

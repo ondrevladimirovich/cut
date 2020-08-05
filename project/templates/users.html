@@ -55,7 +55,7 @@
                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                     </button>
                                     {% if user['role_id'] != 1 %} <!-- не разрешаем удалять администраторские учётки -->
-                                        <button id="delete_user" title="Удалить пользователя" type="button" data-user_id="{{ user['id'] }}" class="btn btn-outline-danger btn-sm">
+                                        <button id="delete_user" title="Удалить пользователя" type="button" data-user_id="{{ user['id'] }}" data-user_login="{{ user['login'] }}" class="btn btn-outline-danger btn-sm">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
                                     {% endif %}
@@ -156,6 +156,28 @@
                     <div class="modal-footer">
                         <button data-dismiss="modal" type="button" class="btn btn-outline-secondary">Отмена</button>
                         <button id="create_user_confirm" type="submit" class="btn btn-success">Создать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Удаление пользователя</h5>
+                        <button type="button" aria-label="Close" data-dismiss="modal" class="close text-white">×</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="delete_text">Действительно удалить пользователя?</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" type="button" class="btn btn-outline-secondary">Отмена</button>
+                        <button id="delete_user_confirm" type="submit" class="btn btn-danger">Удалить</button>
                     </div>
                 </div>
             </div>

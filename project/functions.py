@@ -134,3 +134,20 @@ def create_user(params):
         data['result'] = 0
 
     return data
+
+def delete_user(params):
+    data = {}
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[DeleteUser] @id = " + str(params['id']) + " ;")
+    
+    result = cursor.fetchone()
+    cursor.commit()
+
+    if(result):
+        data['msg'] = ''
+        data['result'] = 1
+    else:
+        data['msg'] = 'Неизвестная ошибка'
+        data['result'] = 0
+
+    return data
