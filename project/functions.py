@@ -89,6 +89,18 @@ def get_device_types_for_tab(user_id):
 
     return data
 
+def get_system_roles():
+    data = []
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[GetRoles];")
+    rows = cursor.fetchall()
+    for row in rows:
+        role = {}
+        role['id'] = row[0]
+        role['name'] = row[1]
+        data.append(role)
+
+    return data
 
 #проверить переменную на значение None
 #возвращается пустая строка если None

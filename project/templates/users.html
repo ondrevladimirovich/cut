@@ -67,4 +67,93 @@
             </table>
         </div>
     </div>
+
+    
+    <div id="createModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title">Создание пользователя</h5>
+                        <button type="button" aria-label="Close" data-dismiss="modal" class="close text-white">×</button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <form style="width: auto;">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="loginInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Логин</label>
+                                        <input id="loginInput" type="text" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="nameInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Имя</label>
+                                        <input id="nameInput" type="text" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="surnameInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Фамилия</label>
+                                        <input id="surnameInput" type="text" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="roleSelect" class="col-4 col-form-label col-form-label-sm font-weight-bold">Роль</label>
+                                        <select id="roleSelect" class="custom-select custom-select-sm">
+                                            <option selected="selected" disabled="disabled" value=""> -- Выберите роль -- </option>
+                                            {% for role in data['system_roles'] %}
+                                                <option value="{{ role['id'] }}">{{ role['name'] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="passwordInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Пароль</label>
+                                        <input id="passwordInput" type="password" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="passwordConfirmInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Подтверждение пароля</label>
+                                        <input id="passwordConfirmInput" type="password" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="emailInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">e-mail</label>
+                                        <input id="emailInput" type="email" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="companyInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Компания</label>
+                                        <input id="companyInput" type="email" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="departmentInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Подразделение</label>
+                                        <input id="departmentInput" type="email" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="positionInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Должность</label>
+                                        <input id="positionInput" type="email" class="form-control form-control-sm">
+                                    </div>
+
+                                    <div role="group" class="form-row form-group required" horizontal="true" label-text-align="right">
+                                        <label for="commentaryInput" class="col-4 col-form-label col-form-label-sm font-weight-bold">Комментарий</label>
+                                        <textare id="commentaryInput" class="form-control form-control-sm"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" type="button" class="btn btn-outline-secondary">Отмена</button>
+                        <button id="create_user_confirm" type="submit" class="btn btn-success">Создать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

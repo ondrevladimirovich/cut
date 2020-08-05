@@ -51,6 +51,7 @@ def users():
     if 'user_id' in session:
         data = {}
         data['current_user'] = Functions.get_current_user_object(session)
+        data['system_roles'] = Functions.get_system_roles()
 
         if data['current_user']['role_id'] == 1:
             data['interface_users'] = Functions.get_interface_users()
