@@ -34,6 +34,9 @@ $(function() {
         $('#loginInput').val('');
         $('#nameInput').val('');
         $('#surnameInput').val('');
+
+        $('#roleSelect').val('');
+
         $('#passwordInput').val('');
         $('#passwordConfirmInput').val('');
         $('#emailInput').val('');
@@ -64,8 +67,13 @@ $(function() {
             return;
         }
 
-        let role_id = $('#roleSelect').children("option:selected").val();
-        alert(role_id);
+        let patronymic = $('#patronymicInput').val();
+
+        let role_id = $('#roleSelect').val();
+
+        if(role_id == '' || role_id == null) {
+            return;
+        }
 
         let password = $('#passwordInput').val();
 
