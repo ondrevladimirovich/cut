@@ -54,6 +54,7 @@ def get_interface_users():
         user['company'] = var_none_check(row[8])
         user['department'] = var_none_check(row[9])
         user['position'] = var_none_check(row[10])
+        user['role_name'] = var_none_check(row[11])
         data.append(user)
 
     return data
