@@ -1,13 +1,13 @@
 $(function() {
     // The first parameter are the coordinates of the center of the map
     // The second parameter is the zoom level
-    var map = L.map('map').setView([40.712, -74.006], 11);
+    var map = L.map('map').setView([46.97361, 41.445], 10);
   
     // {s}, {z}, {x} and {y} are placeholders for map tiles
     // {x} and {y} are the x/y of where you are on the map
     // {z} is the zoom level
     // {s} is the subdomain of cartodb
-    var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     });
     
@@ -23,9 +23,15 @@ $(function() {
     
         success: function(resp) {
             if(resp.result == 1) {
-                resp.devices.forEach( (device) => {
+                resp.devices.forEach((device) => {
                     if(device.latitude != '' && device.longitude !== '')
-                        L.marker([device.latitude, device.longitude]).addTo(map)
+                        L.marker([device.latitude, device.longitude], {
+                            html: device.address
+                        }).addTo(map)
+                        /*L.popup()
+                        .setLatLng([device.latitude, device.longitude])
+                        .setContent("I am a standalone popup.")
+                        .openOn(mymap);*/
                 });
             }
             else {

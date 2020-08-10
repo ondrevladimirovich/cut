@@ -37,16 +37,16 @@
                         <th role="columnheader" scope="col" aria-colindex="7" class="">Действия</th>
                     </tr>
                 </thead>
-                <tbody role="rowgroup">
+                <tbody id="users_table_body" role="rowgroup">
                     {% for user in data['interface_users'] %}
                         <tr role="row" class="">
                             <td aria-colindex="1" role="cell" class="">{{ user['id'] }}</td>
-                            <td aria-colindex="1" role="cell" class="">{{ user['login'] }}</td>
-                            <td aria-colindex="1" role="cell" class="">{{ user['surname'] }}</td>
-                            <td aria-colindex="1" role="cell" class="">{{ user['name'] }}</td>
-                            <td aria-colindex="1" role="cell" class="">{{ user['patronymic'] }}</td>
-                            <td aria-colindex="1" role="cell" class="">{{ user['role_name'] }}</td>
-                            <td aria-colindex="1" role="cell" class="">
+                            <td aria-colindex="2" role="cell" class="">{{ user['login'] }}</td>
+                            <td aria-colindex="3" role="cell" class="">{{ user['surname'] }}</td>
+                            <td aria-colindex="4" role="cell" class="">{{ user['name'] }}</td>
+                            <td aria-colindex="5" role="cell" class="">{{ user['patronymic'] }}</td>
+                            <td aria-colindex="6" role="cell" class="">{{ user['role_name'] }}</td>
+                            <td aria-colindex="7" role="cell" class="">
                                 <div role="group" class="btn-group">
                                     <button title="Изменить пользовательские данные" type="button" data-user_id="{{ user['id'] }}" class="btn btn-outline-warning btn-sm edit_user">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>

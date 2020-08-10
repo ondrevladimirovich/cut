@@ -92,6 +92,10 @@ def delete_user_ajax():
 
 @main.route('/get_devices_for_map_ajax', methods=['POST'])
 def get_devices_for_map_ajax():
-    #response = Functions.get_devices_for_map_tab(request.form)
     response = Functions.get_devices_for_map_tab(session['user_id'])
+    return jsonify(response)
+
+@main.route('/get_users_ajax', methods=['POST'])
+def get_users_ajax():
+    response = Functions.get_interface_users()
     return jsonify(response)
