@@ -188,62 +188,137 @@
 
                         <div class="tab-pane fade" id="devices_tab">
                             <div>
-                                <div>
-                                </div>
-                                <div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <form class="my-2 form-inline">
+                                                <div role="group" class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Показывать</div>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <select class="custom-select custom-select-sm" id="devices_per_page">
+                                                            <option value="20">20</option>
+                                                            <option value="40">40</option>
+                                                            <option value="60">60</option>
+                                                            <option value="100">100</option>
+                                                            <option value="0">Все</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                {% if data['devices_total_count'][0] > 0 %}
+                                                <ul role="menubar" aria-disabled="false" aria-label="Pagination" class="pagination m-0 ml-3 b-pagination pagination-sm">
+                                                    <li role="presentation" class="page-item">
+                                                        <a role="menuitem" tabindex="-1" aria-label="На первую страницу" target="_self" href="#" class="page-link">«</a>
+                                                    </li>
+                                                    <li role="presentation" class="page-item">
+                                                        <a role="menuitem" tabindex="-1" aria-label="На предыдущую страницу" target="_self" href="#" class="page-link">‹</a>
+                                                    </li>
+
+                                                    <li role="presentation" class="page-item active">
+                                                        <a role="menuitemradio" aria-label="Go to page 1" aria-checked="true" aria-posinset="1" aria-setsize="646" tabindex="0" target="_self" href="#" class="page-link">1</a>
+                                                    </li>
+                                                    {% if data['devices_total_count'][0] > 1 %}
+                                                    <li role="presentation" class="page-item">
+                                                        <a role="menuitemradio" aria-label="Go to page 2" aria-checked="false" aria-posinset="2" aria-setsize="646" tabindex="-1" target="_self" href="#" class="page-link">2</a>
+                                                    </li>
+                                                    {% endif %}
+                                                    {% if data['devices_total_count'][0] > 2 %}
+                                                    <li role="separator" class="page-item disabled bv-d-xs-down-none">
+                                                        <span class="page-link">…</span>
+                                                    </li>
+                                                    {% endif %}
+
+                                                    <li role="presentation" class="page-item">
+                                                        <a role="menuitem" tabindex="-1" aria-label="На следующую страницу" target="_self" href="#" class="page-link">›</a>
+                                                    </li>
+                                                    <li role="presentation" class="page-item">
+                                                        <a role="menuitem" tabindex="-1" aria-label="На последнюю страницу" target="_self" href="#" class="page-link">»</a>
+                                                    </li>
+                                                </ul>
+                                                {% endif %}
+
+                                            </form>
+                                        </div>
+
+                                        <div class="d-flex col">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <form class="form-inline">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" autocomplete="off" class="custom-control-input" value="true" id="with_photo_only">
+                                                            <label class="custom-control-label" for="with_photo_only">
+                                                                Только устройства без фотографий
+                                                            </label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-end align-items-start col-2">
+                                            <button type="button" class="btn btn-outline-info border-0 btn-sm">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                Обновить
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <table role="table" aria-busy="false" aria-colcount="9" class="table b-table table-sm" id="devices_table">
-                                    <thead role="rowgroup" class="">
-                                        <tr role="row" class="">
-                                            <th role="columnheader" scope="col" aria-colindex="1" class="" style="min-width: 7rem;">
-                                                Устройство
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="2" class="" style="min-width: 8rem;">
-                                                Доступность
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="3" class="" style="min-width: 9rem;">
-                                                ID
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="4" class="" style="min-width: 8rem;">
-                                                Абонентский номер
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="5" class="" style="min-width: 8rem;">
-                                                Тип линии связи
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="6" class="" style="min-width: 5rem;">
-                                                Версия ПО
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="7" class="" style="min-width: 14rem;">
-                                                Адрес
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="8" class="">
-                                                Последняя отзвонка
-                                            </th>
-                                            <th role="columnheader" scope="col" aria-colindex="9" class="">
-                                                Статус
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for device in data['devices'] %}
-                                        <tr role="row">
-                                            <td aria-colindex="1" role="cell">
-                                                <i class="fa fa-phone-square" aria-hidden="true"></i> 
-                                                {{ device['phone_type'] }}
-                                            </td>
-                                            <td aria-colindex="2" role="cell"> {{ device['month_availability'] }}</td>
-                                            <td aria-colindex="3" role="cell"> {{ device['id'] }}</td>
-                                            <td aria-colindex="4" role="cell"> {{ device['number'] }}</td>
-                                            <td aria-colindex="5" role="cell"> {{ device['line_type'] }}</td>
-                                            <td aria-colindex="6" role="cell"> {{ device['sw_version'] }}</td>
-                                            <td aria-colindex="7" role="cell"> {{ device['address'] }}</td>
-                                            <td aria-colindex="8" role="cell"> {{ device['last_call_date'] }}</td>
-                                            <td aria-colindex="9" role="cell"> {{ device['state'] }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                <div class="mt-3 table-responsive">
+                                    <table role="table" aria-busy="false" aria-colcount="9" class="table b-table table-sm" id="devices_table">
+                                        <thead role="rowgroup" class="">
+                                            <tr role="row" class="">
+                                                <th role="columnheader" scope="col" aria-colindex="1" class="" style="min-width: 7rem;">
+                                                    Устройство
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="2" class="" style="min-width: 8rem;">
+                                                    Доступность
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="3" class="" style="min-width: 9rem;">
+                                                    ID
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="4" class="" style="min-width: 8rem;">
+                                                    Абонентский номер
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="5" class="" style="min-width: 8rem;">
+                                                    Тип линии связи
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="6" class="" style="min-width: 5rem;">
+                                                    Версия ПО
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="7" class="" style="min-width: 14rem;">
+                                                    Адрес
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="8" class="">
+                                                    Последняя отзвонка
+                                                </th>
+                                                <th role="columnheader" scope="col" aria-colindex="9" class="">
+                                                    Статус
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for device in data['devices'] %}
+                                            <tr role="row">
+                                                <td aria-colindex="1" role="cell">
+                                                    <i class="fa fa-phone-square" aria-hidden="true"></i> 
+                                                    {{ device['phone_type'] }}
+                                                </td>
+                                                <td aria-colindex="2" role="cell"> {{ device['month_availability'] }}</td>
+                                                <td aria-colindex="3" role="cell"> {{ device['id'] }}</td>
+                                                <td aria-colindex="4" role="cell"> {{ device['number'] }}</td>
+                                                <td aria-colindex="5" role="cell"> {{ device['line_type'] }}</td>
+                                                <td aria-colindex="6" role="cell"> {{ device['sw_version'] }}</td>
+                                                <td aria-colindex="7" role="cell"> {{ device['address'] }}</td>
+                                                <td aria-colindex="8" role="cell"> {{ device['last_call_date'] }}</td>
+                                                <td aria-colindex="9" role="cell"> {{ device['state'] }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 <div>
                                 </div>

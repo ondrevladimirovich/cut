@@ -14,6 +14,7 @@ def index():
         data['current_user'] = Functions.get_current_user_object(session)
         data['regions'] = Functions.get_regions_for_tab(session['user_id'])
         data['devices'] = Functions.get_devices_for_tab(session['user_id'])
+        data['devices_total_count'] = Functions.get_devices_count(session['user_id'])
         #data['devices_on_map'] = Functions.get_devices_for_map_tab(session['user_id'])
         data['device_types'] = Functions.get_device_types_for_tab(session['user_id'])
         return render_template('index.html', data = data)

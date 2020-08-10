@@ -89,10 +89,13 @@ def get_device_types_for_tab(user_id):
 
     return data
 
-def get_devices_for_tab(user_id):
+def get_devices_for_tab(user_id, page_size = 20, page_number = 1):
     data = []
     cursor = db_conn()
-    cursor.execute("EXEC [interface].[GetDevices] @user_id =" + str(user_id) + ";")
+    cursor.execute("EXEC [interface].[GetDevices] @user_id =" + str(user_id) + 
+        ", @PageSize = " + str(page_size) + 
+        ", @PageNumber = " + str(page_number) + ";")
+
     rows = cursor.fetchall()
     for row in rows:
         device = {}
@@ -109,6 +112,14 @@ def get_devices_for_tab(user_id):
         device['photo_count'] = var_none_check(row[10])
         data.append(device)
 
+    return data
+
+def get_devices_count(user_id):
+    data = []
+    cursor = db_conn()
+    cursor.execute("EXEC [interface].[GetDevicesCount] @user_id =" + str(user_id) + ";")
+    count = cursor.fetchone()
+    data.append(count[0])
     return data
 
 def get_devices_for_map_tab(user_id):
