@@ -217,6 +217,15 @@ $(function() {
 
                     $('#users_table_body').append(buttons);
                     $('#users_table_body').append('</tr>');
+
+                    $('.delete_user').on('click', function(e){
+                        e.preventDefault();
+                
+                        user_id_to_delete = $(this).data('user_id');
+                        user_login_to_delete = $(this).data('user_login');
+                
+                        $('#deleteModal').modal('show');
+                    });
                 });
             }
         });
