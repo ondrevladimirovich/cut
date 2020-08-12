@@ -56,13 +56,37 @@ $(function() {
             return;
 
         let page = $(this).data('page');
+        let page_size = $('#devices_per_page').val();
 
         if(page != undefined) {
-            alert(page);
-
             //забрать AJAX очередную страницу
-            //очистить и нарисовать заново таблицу
-            //перерисовать пагинацию
+            $.ajax({
+                url: '/get_devices_ajax',
+                type: 'POST',
+                data: 
+                {
+                    page_number: page, 
+                    page_size: page_size
+                },
+            
+                success: function(resp) {
+                    
+                    //очистить и нарисовать заново таблицу
+                    $('#devices_table_body').empty();
+                    
+                    let devices = '';
+
+                    //перерисовать пагинацию
+
+                    console.log(resp);
+                    if(resp.result == 1) {
+                    }
+                    else {
+                        //TODO: сообщение об ошибке
+                        console.log(resp.msg);
+                    }
+                }
+            });
         }        
     });
 });

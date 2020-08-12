@@ -188,45 +188,51 @@ $(function() {
             },
         
             success: function(resp) {
-                resp.forEach((user) => {
-                    $('#users_table_body').append('<tr role="row" class="">');
-                    $('#users_table_body').append('<td aria-colindex="1" role="cell" class="">' + user.id + '</td>');
-                    $('#users_table_body').append('<td aria-colindex="2" role="cell" class="">' + user.login + '</td>');
-                    $('#users_table_body').append('<td aria-colindex="3" role="cell" class="">' + user.surname + '</td>');
-                    $('#users_table_body').append('<td aria-colindex="4" role="cell" class="">' + user.name + '</td>');
-                    $('#users_table_body').append('<td aria-colindex="5" role="cell" class="">' + user.patronymic + '</td>');
-                    $('#users_table_body').append('<td aria-colindex="6" role="cell" class="">' + user.role_name + '</td>');
+                if(resp.result == 1) {
+                    resp.users.forEach((user) => {
+                        $('#users_table_body').append('<tr role="row" class="">');
+                        $('#users_table_body').append('<td aria-colindex="1" role="cell" class="">' + user.id + '</td>');
+                        $('#users_table_body').append('<td aria-colindex="2" role="cell" class="">' + user.login + '</td>');
+                        $('#users_table_body').append('<td aria-colindex="3" role="cell" class="">' + user.surname + '</td>');
+                        $('#users_table_body').append('<td aria-colindex="4" role="cell" class="">' + user.name + '</td>');
+                        $('#users_table_body').append('<td aria-colindex="5" role="cell" class="">' + user.patronymic + '</td>');
+                        $('#users_table_body').append('<td aria-colindex="6" role="cell" class="">' + user.role_name + '</td>');
 
-                    //кнопки
-                    let buttons = '';
-                    buttons += '<td aria-colindex="7" role="cell" class="">';
-                    buttons += '<div role="group" class="btn-group">';
-                    buttons += '<button title="Изменить пользовательские данные" type="button" data-user_id="' + user.id + '" class="btn btn-outline-warning btn-sm edit_user">';
-                    buttons += '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-                    buttons += '</button>';
-                    buttons += '<button title="Информация о пользователе" type="button" data-user_id="' + user.id + '" class="btn btn-outline-info btn-sm info_user">';
-                    buttons += '<i class="fa fa-info-circle" aria-hidden="true"></i>';
-                    buttons += '</button>';
-                    if(user.role_id != 1) {
-                        buttons += '<button title="Удалить пользователя" type="button" data-user_id="' + user.id + '" data-user_login="' + user.login + '" class="btn btn-outline-danger btn-sm delete_user">';
-                        buttons += '<i class="fa fa-trash" aria-hidden="true"></i>';
+                        //кнопки
+                        let buttons = '';
+                        buttons += '<td aria-colindex="7" role="cell" class="">';
+                        buttons += '<div role="group" class="btn-group">';
+                        buttons += '<button title="Изменить пользовательские данные" type="button" data-user_id="' + user.id + '" class="btn btn-outline-warning btn-sm edit_user">';
+                        buttons += '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
                         buttons += '</button>';
-                    }
-                    buttons += '</div>';
-                    buttons += '</td>';
+                        buttons += '<button title="Информация о пользователе" type="button" data-user_id="' + user.id + '" class="btn btn-outline-info btn-sm info_user">';
+                        buttons += '<i class="fa fa-info-circle" aria-hidden="true"></i>';
+                        buttons += '</button>';
+                        if(user.role_id != 1) {
+                            buttons += '<button title="Удалить пользователя" type="button" data-user_id="' + user.id + '" data-user_login="' + user.login + '" class="btn btn-outline-danger btn-sm delete_user">';
+                            buttons += '<i class="fa fa-trash" aria-hidden="true"></i>';
+                            buttons += '</button>';
+                        }
+                        buttons += '</div>';
+                        buttons += '</td>';
 
-                    $('#users_table_body').append(buttons);
-                    $('#users_table_body').append('</tr>');
+                        $('#users_table_body').append(buttons);
+                        $('#users_table_body').append('</tr>');
 
-                    $('.delete_user').on('click', function(e){
-                        e.preventDefault();
-                
-                        user_id_to_delete = $(this).data('user_id');
-                        user_login_to_delete = $(this).data('user_login');
-                
-                        $('#deleteModal').modal('show');
+                        $('.delete_user').on('click', function(e){
+                            e.preventDefault();
+                    
+                            user_id_to_delete = $(this).data('user_id');
+                            user_login_to_delete = $(this).data('user_login');
+                    
+                            $('#deleteModal').modal('show');
+                        });
                     });
-                });
+                }
+                else {
+                    //TODO: сообщение об ошибке
+                    console.log(resp.msg);
+                }
             }
         });
     }

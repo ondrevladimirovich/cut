@@ -37,9 +37,10 @@ def get_current_user_object(session):
 
 # вызов ХП на получение всех пользователей
 def get_interface_users():
-    data = []
+    data = {}
     cursor = db_conn()
     cursor.execute("EXEC [interface].[GetUsers];")
+    users = []
     rows = cursor.fetchall()
     for row in rows:
         user = {}
@@ -55,7 +56,11 @@ def get_interface_users():
         user['department'] = var_none_check(row[9])
         user['position'] = var_none_check(row[10])
         user['role_name'] = var_none_check(row[11])
-        data.append(user)
+        users.append(user)
+
+    data['msg'] = ''
+    data['result'] = 1
+    data['users'] = users
 
     return data
 
@@ -90,12 +95,13 @@ def get_device_types_for_tab(user_id):
     return data
 
 def get_devices_for_tab(user_id, page_size = 20, page_number = 1):
-    data = []
+    data = {}
     cursor = db_conn()
     cursor.execute("EXEC [interface].[GetDevices] @user_id =" + str(user_id) + 
         ", @PageSize = " + str(page_size) + 
         ", @PageNumber = " + str(page_number) + ";")
 
+    devices = []
     rows = cursor.fetchall()
     for row in rows:
         device = {}
@@ -110,7 +116,11 @@ def get_devices_for_tab(user_id, page_size = 20, page_number = 1):
         device['last_call_date'] = var_none_check(row[8])
         device['state'] = var_none_check(row[9])
         device['photo_count'] = var_none_check(row[10])
-        data.append(device)
+        devices.append(device)
+
+    data['msg'] = ''
+    data['result'] = 1
+    data['devices'] = devices
 
     return data
 

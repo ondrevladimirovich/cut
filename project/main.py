@@ -13,7 +13,7 @@ def index():
         data = {}
         data['current_user'] = Functions.get_current_user_object(session)
         data['regions'] = Functions.get_regions_for_tab(session['user_id'])
-        data['devices'] = Functions.get_devices_for_tab(session['user_id'])
+        data['devices'] = Functions.get_devices_for_tab(session['user_id'])['devices']
         data['devices_total_count'] = Functions.get_devices_count(session['user_id'])
         #data['devices_on_map'] = Functions.get_devices_for_map_tab(session['user_id'])
         data['device_types'] = Functions.get_device_types_for_tab(session['user_id'])
@@ -35,7 +35,7 @@ def users():
         data['system_roles'] = Functions.get_system_roles()
 
         if data['current_user']['role_id'] == 1:
-            data['interface_users'] = Functions.get_interface_users()
+            data['interface_users'] = Functions.get_interface_users()['users']
             return render_template('users.html', data = data)
         else:
             return render_template('index.html', data = data)
@@ -99,4 +99,12 @@ def get_devices_for_map_ajax():
 @main.route('/get_users_ajax', methods=['POST'])
 def get_users_ajax():
     response = Functions.get_interface_users()
+    return jsonify(response)
+
+@main.route('/get_devices_ajax', methods=['POST'])
+def get_devices_ajax():
+    page_size = request.form['page_size']
+    page_number = request.form['page_number']
+
+    response = Functions.get_devices_for_tab(session['user_id'], page_size, page_number)
     return jsonify(response)
