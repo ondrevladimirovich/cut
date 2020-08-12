@@ -13,9 +13,11 @@ def index():
         data = {}
         data['current_user'] = Functions.get_current_user_object(session)
         data['regions'] = Functions.get_regions_for_tab(session['user_id'])
-        data['devices'] = Functions.get_devices_for_tab(session['user_id'])['devices']
-        data['devices_total_count'] = Functions.get_devices_count(session['user_id'])
-        #data['devices_on_map'] = Functions.get_devices_for_map_tab(session['user_id'])
+
+        devices = Functions.get_devices_for_tab(session['user_id'])
+        data['devices'] = devices['devices']
+        data['devices_total_count'] = devices['devices_total_count']
+
         data['device_types'] = Functions.get_device_types_for_tab(session['user_id'])
         return render_template('index.html', data = data)
     else:
@@ -65,7 +67,7 @@ def login():
     response = {}
 
     #найти в БД пользователя по паре-логин пароль
-    current_user = Functions.get_db_user(login, password);
+    current_user = Functions.get_db_user(login, password)
 
     #если нашёлся - записать в сесиию id пользователя и id роли
     #и перенаправить снова на главную

@@ -15,6 +15,7 @@ def create_app():
 
     #port = int(os.environ.get('PORT', 5088))
     app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config['DEBUG'] = True
     #app.run(host='127.0.0.1', port=port)
 
     @app.context_processor

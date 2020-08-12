@@ -121,16 +121,15 @@ def get_devices_for_tab(user_id, page_size = 20, page_number = 1):
     data['msg'] = ''
     data['result'] = 1
     data['devices'] = devices
+    data['devices_total_count'] = get_devices_count(user_id)
 
     return data
 
 def get_devices_count(user_id):
-    data = []
     cursor = db_conn()
     cursor.execute("EXEC [interface].[GetDevicesCount] @user_id =" + str(user_id) + ";")
     count = cursor.fetchone()
-    data.append(count[0])
-    return data
+    return count[0]
 
 def get_devices_for_map_tab(user_id):
     data = {}
