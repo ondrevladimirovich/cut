@@ -67,7 +67,7 @@ $(function() {
         current_page_number = $(this).data('page');
         page_size = $('#devices_per_page').val();
 
-        if(page != undefined) {
+        if(current_page_number != undefined) {
             fill_devices_table(current_page_number, page_size);
         }        
     });
@@ -78,14 +78,14 @@ $(function() {
         fill_devices_table(current_page_number, page_size);
     });
 
-    function fill_devices_table(page, page_size) {
+    function fill_devices_table(page_number, page_size) {
         //забрать AJAX очередную страницу
         $.ajax({
             url: '/get_devices_ajax',
             type: 'POST',
             data: 
             {
-                page_number: page, 
+                page_number: page_number, 
                 page_size: page_size
             },
         
@@ -93,6 +93,7 @@ $(function() {
                 console.log(resp);
                 if(resp.result == 1) {
                     devices_total_count = resp.devices_total_count;
+                    let last_page_number = Math.ceil(devices_total_count / page_size);
 
                     //очистить и нарисовать заново таблицу
                     $('#devices_table_body').empty();
@@ -137,7 +138,99 @@ $(function() {
                     $('#devices_table_body').append(devices);
 
                     //перерисовать пагинацию
+                    //TODO: РАЗОБРАТЬСЯ С ПЕРЕЗАПИСЬЮ data-атрибутов
+                    //3 случая:
+                    if(page_number == 1) {
+                        //1. 1ая страница
+                        // - кнопки перехода назад заблокированы
+                        $('#pagination_first').addClass('disabled');
+                        $('#pagination_prev').addClass('disabled');
 
+                        // - кнопки перехода вперёд - разблокированы
+                        $('#pagination_next').removeClass('disabled');
+                        $('#pagination_last').removeClass('disabled');
+
+
+                        // - 1 - активная
+                        $('#pagination_one').addClass('active');
+                        $('#pagination_two').removeClass('active');
+                        $('#pagination_three').removeClass('active');
+
+                        // - цифры и дата-пейдж 1, 2, 3
+                        //$('#pagination_one').attr('data-page', 1);
+                        $('#pagination_one').children().html(1)
+                        //$('#pagination_two').attr('data-page', 2);
+                        $('#pagination_two').children().html(2)
+                        //$('#pagination_three').attr('data-page', 3);
+                        $('#pagination_three').children().html(3)
+
+                        // - кнопка перехода вперёд: 2
+                        $('#pagination_next').attr('data-page', 2);
+
+                        // - кнопка перехода в конец: последняя
+                        $('#pagination_last').attr('data-page', last_page_number);
+                    } else if (page_number == last_page_number) {
+                        //2. последняя страница
+
+                        // - кнопки перехода вперёд заблокированы
+                        $('#pagination_next').addClass('disabled');
+                        $('#pagination_last').addClass('disabled');
+
+                        // - кнопки перехода назад - разблокированы
+                        $('#pagination_first').removeClass('disabled');
+                        $('#pagination_prev').removeClass('disabled');
+
+                        // - последняя - активная
+                        $('#pagination_three').addClass('active');
+                        $('#pagination_one').removeClass('active');
+                        $('#pagination_two').removeClass('active');
+
+                        // - цифры и дата-пейдж последняя - 2, последняя - 1, последняя
+                        //$('#pagination_one').attr('data-page', last_page_number - 2);
+                        //$('#pagination_one').data('page', last_page_number - 2);
+                        $('#pagination_one').children().html(last_page_number - 2)
+                        //$('#pagination_two').attr('data-page', last_page_number - 1);
+                        //$('#pagination_two').data('page', last_page_number - 1);
+                        $('#pagination_two').children().html(last_page_number - 1)
+                        //$('#pagination_three').attr('data-page', last_page_number);
+                        //$('#pagination_three').data('page', last_page_number);
+                        $('#pagination_three').children().html(last_page_number)
+
+                        // - кнопка перехода назад: последняя - 1
+                        $('#pagination_prev').attr('data-page', last_page_number - 1);
+
+                        // - кнопка перехода в начало: 1
+                        $('#pagination_first').attr('data-page', 1);
+                    } else {
+                        //3. все остальные
+                        // - кнопки перехода в обе стороны разблокированы
+                        $('#pagination_first').removeClass('disabled');
+                        $('#pagination_prev').removeClass('disabled');
+                        $('#pagination_next').removeClass('disabled');
+                        $('#pagination_last').removeClass('disabled');
+
+                        $('#pagination_two').addClass('active');
+                        $('#pagination_one').removeClass('active');
+                        $('#pagination_three').removeClass('active');
+
+                        //$('#pagination_one').attr('data-page', page_number - 1);
+                        //$('#pagination_one').removeData('page');
+                        //$('#pagination_one').data('page', page_number - 1);
+                        $('#pagination_one').children().html(page_number - 1)
+                        //$('#pagination_two').attr('data-page', page_number);
+                        //$('#pagination_two').removeData('page');
+                        //$('#pagination_two').data('page', page_number);
+                        $('#pagination_two').children().html(page_number)
+                        //$('#pagination_three').attr('data-page', page_number + 1);
+                        //$('#pagination_three').removeData('page');
+                        //$('#pagination_three').data('page', page_number + 1);
+                        $('#pagination_three').children().html(page_number + 1)
+
+                        $('#pagination_first').attr('data-page', 1);
+                        $('#pagination_prev').attr('data-page', page_number - 1);
+                        $('#pagination_next').attr('data-page', page_number + 1);
+                        $('#pagination_last').attr('data-page', last_page_number);
+                    }
                 }
                 else {
                     //TODO: сообщение об ошибке

@@ -211,38 +211,45 @@
 
                                                 {% if data['devices_total_count'] > 0 %}
                                                 <ul role="menubar" aria-disabled="false" aria-label="Pagination" class="pagination m-0 ml-3 b-pagination pagination-sm">
-                                                    <li role="presentation" class="page-item disabled" data-page="1">
+                                                    <li id="pagination_first" role="presentation" class="page-item disabled" data-page="1">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">«</a>
                                                     </li>
-                                                    <li role="presentation" class="page-item disabled" data-page="1">
+                                                    <li id="pagination_prev" role="presentation" class="page-item disabled" data-page="1">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">‹</a>
                                                     </li>
 
-                                                    <li role="presentation" class="page-item active" data-page="1">
+                                                    <li id="pagination_one" role="presentation" class="page-item active" data-page="1">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">1</a>
                                                     </li>
 
                                                     {% if data['devices_total_count'] > 1 %}
-                                                    <li role="presentation" class="page-item" data-page="2">
+                                                    <li id="pagination_two" role="presentation" class="page-item" data-page="2">
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">2</a>
+                                                    </li>
+                                                    {% else %}
+                                                    <li id="pagination_two" role="presentation" class="page-item disabled" data-page="2">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">2</a>
                                                     </li>
                                                     {% endif %}
 
                                                     {% if data['devices_total_count'] > 2 %}
-                                                    <li role="presentation" class="page-item" data-page="3">
+                                                    <li id="pagination_three" role="presentation" class="page-item" data-page="3">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">3</a>
                                                     </li>
-                                                    <li role="presentation" class="page-item" data-page="3">
+                                                    <li id="pagination_next" role="presentation" class="page-item" data-page="2">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">›</a>
                                                     </li>
-                                                    <li role="presentation" class="page-item" data-page="{{ (data['devices_total_count'] / default_devices_per_page_count) | round(0, 'ceil') | int }}">
+                                                    <li id="pagination_last" role="presentation" class="page-item" data-page="{{ (data['devices_total_count'] / default_devices_per_page_count) | round(0, 'ceil') | int }}">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">»</a>
                                                     </li>
                                                     {% else %}
-                                                    <li role="presentation" class="page-item disabled">
+                                                    <li id="pagination_three" role="presentation" class="page-item disabled" data-page="3">
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">3</a>
+                                                    </li>
+                                                    <li id="pagination_next" role="presentation" class="page-item disabled">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">›</a>
                                                     </li>
-                                                    <li role="presentation" class="page-item disabled">
+                                                    <li id="pagination_last" role="presentation" class="page-item disabled">
                                                         <a role="menuitemradio" target="_self" href="#" class="page-link">»</a>
                                                     </li>
                                                     {% endif %}
