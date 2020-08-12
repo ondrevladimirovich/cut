@@ -207,35 +207,57 @@
                                                     </div>
                                                 </div>
 
+                                                {% set default_devices_per_page_count = 20 %}
+
                                                 {% if data['devices_total_count'][0] > 0 %}
                                                 <ul role="menubar" aria-disabled="false" aria-label="Pagination" class="pagination m-0 ml-3 b-pagination pagination-sm">
-                                                    <li role="presentation" class="page-item">
-                                                        <a role="menuitem" tabindex="-1" aria-label="На первую страницу" target="_self" href="#" class="page-link">«</a>
+                                                    <li role="presentation" class="page-item disabled" data-page="1">
+                                                        <!--<a role="menuitem" tabindex="-1" aria-label="На первую страницу" target="_self" href="#" class="page-link">«</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">«</a>
                                                     </li>
-                                                    <li role="presentation" class="page-item">
-                                                        <a role="menuitem" tabindex="-1" aria-label="На предыдущую страницу" target="_self" href="#" class="page-link">‹</a>
+                                                    <li role="presentation" class="page-item disabled" data-page="1">
+                                                        <!--<a role="menuitem" tabindex="-1" aria-label="На предыдущую страницу" target="_self" href="#" class="page-link">‹</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">‹</a>
                                                     </li>
 
-                                                    <li role="presentation" class="page-item active">
-                                                        <a role="menuitemradio" aria-label="Go to page 1" aria-checked="true" aria-posinset="1" aria-setsize="646" tabindex="0" target="_self" href="#" class="page-link">1</a>
+                                                    <li role="presentation" class="page-item active" data-page="1">
+                                                        <!--<a role="menuitemradio" aria-label="Go to page 1" aria-checked="true" aria-posinset="1" aria-setsize="646" tabindex="0" target="_self" href="#" class="page-link">1</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">1</a>
                                                     </li>
+
                                                     {% if data['devices_total_count'][0] > 1 %}
-                                                    <li role="presentation" class="page-item">
-                                                        <a role="menuitemradio" aria-label="Go to page 2" aria-checked="false" aria-posinset="2" aria-setsize="646" tabindex="-1" target="_self" href="#" class="page-link">2</a>
-                                                    </li>
-                                                    {% endif %}
-                                                    {% if data['devices_total_count'][0] > 2 %}
-                                                    <li role="separator" class="page-item disabled bv-d-xs-down-none">
-                                                        <span class="page-link">…</span>
+                                                    <li role="presentation" class="page-item" data-page="2">
+                                                        <!--<a role="menuitemradio" aria-label="Go to page 2" aria-checked="false" aria-posinset="2" aria-setsize="646" tabindex="-1" target="_self" href="#" class="page-link">2</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">2</a>
                                                     </li>
                                                     {% endif %}
 
-                                                    <li role="presentation" class="page-item">
-                                                        <a role="menuitem" tabindex="-1" aria-label="На следующую страницу" target="_self" href="#" class="page-link">›</a>
+                                                    {% if data['devices_total_count'][0] > 2 %}
+                                                    <!--<li role="separator" class="page-item disabled bv-d-xs-down-none">
+                                                        <span class="page-link">…</span>
+                                                    </li>-->
+                                                    <li role="presentation" class="page-item" data-page="3">
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">3</a>
                                                     </li>
-                                                    <li role="presentation" class="page-item">
-                                                        <a role="menuitem" tabindex="-1" aria-label="На последнюю страницу" target="_self" href="#" class="page-link">»</a>
+                                                    <li role="presentation" class="page-item" data-page="3">
+                                                        <!--<a role="menuitem" tabindex="-1" aria-label="На следующую страницу" target="_self" href="#" class="page-link">›</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">›</a>
                                                     </li>
+                                                    <li role="presentation" class="page-item" data-page="{{ (data['devices_total_count'][0] / default_devices_per_page_count) | round(0, 'ceil') | int }}">
+                                                        <!--<a role="menuitem" tabindex="-1" aria-label="На последнюю страницу" target="_self" href="#" class="page-link">»</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">»</a>
+                                                    </li>
+                                                    {% else %}
+                                                    <li role="presentation" class="page-item disabled">
+                                                        <!--<a role="menuitem" tabindex="-1" aria-label="На следующую страницу" target="_self" href="#" class="page-link">›</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">›</a>
+                                                    </li>
+                                                    <li role="presentation" class="page-item disabled">
+                                                        <!--<a role="menuitem" tabindex="-1" aria-label="На последнюю страницу" target="_self" href="#" class="page-link">»</a>-->
+                                                        <a role="menuitemradio" target="_self" href="#" class="page-link">»</a>
+                                                    </li>
+                                                    {% endif %}
+                                                    
                                                 </ul>
                                                 {% endif %}
 

@@ -9,16 +9,12 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = 'skut mrf'
 
-    # blueprint for auth routes in our app
-    #from .auth import auth as auth_blueprint
-    #app.register_blueprint(auth_blueprint)
-
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     #port = int(os.environ.get('PORT', 5088))
-    #app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
     #app.run(host='127.0.0.1', port=port)
 
     @app.context_processor

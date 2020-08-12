@@ -46,4 +46,23 @@ $(function() {
 
         alert(1);
     });
+
+    $('.page-item').on('click', function(e){
+        e.preventDefault();
+
+        //если выбрана текущая страница - ничего не делать
+        let is_current = $(this).hasClass('active');
+        if(is_current)
+            return;
+
+        let page = $(this).data('page');
+
+        if(page != undefined) {
+            alert(page);
+
+            //забрать AJAX очередную страницу
+            //очистить и нарисовать заново таблицу
+            //перерисовать пагинацию
+        }        
+    });
 });
