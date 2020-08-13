@@ -2,21 +2,15 @@ $(function() {
     let devices_total_count;
     let current_page_number = 1;
     let page_size = 20;
+      
+      var map = L.map('map').setView([46.973, 41.445], 10);
+      
+      L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+      var markers = L.markerClusterGroup();
 
-    // The first parameter are the coordinates of the center of the map
-    // The second parameter is the zoom level
-    var map = L.map('map').setView([46.97361, 41.445], 10);
-  
-    // {s}, {z}, {x} and {y} are placeholders for map tiles
-    // {x} and {y} are the x/y of where you are on the map
-    // {z} is the zoom level
-    // {s} is the subdomain of cartodb
-    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    });
-    
-    // Now add the layer onto the map
-    map.addLayer(layer);
 
     $.ajax({
         url: '/get_devices_for_map_ajax',
@@ -27,16 +21,15 @@ $(function() {
     
         success: function(resp) {
             if(resp.result == 1) {
+
                 resp.devices.forEach((device) => {
-                    if(device.latitude != '' && device.longitude !== '')
-                        L.marker([device.latitude, device.longitude], {
-                            html: device.address
-                        }).addTo(map)
-                        /*L.popup()
-                        .setLatLng([device.latitude, device.longitude])
-                        .setContent("I am a standalone popup.")
-                        .openOn(mymap);*/
+                    if(device.latitude != '' && device.longitude !== '') {
+                        let marker = L.marker([device.latitude, device.longitude]).bindPopup(device.address);
+                        markers.addLayer(marker);
+                    }
                 });
+
+                map.addLayer(markers);
             }
             else {
                 //TODO: сообщение об ошибке
