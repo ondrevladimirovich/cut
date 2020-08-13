@@ -48,7 +48,9 @@ $(function() {
     $('#refresh_data').on('click', function(e){
         e.preventDefault();
 
-        alert(1);
+        /*console.log($('#pagination_first').data('page'));
+        $('#pagination_first').data('page', 99);
+        console.log($('#pagination_first').data('page'));*/
     });
 
     $('.page-item').on('click', function(e){
@@ -138,7 +140,6 @@ $(function() {
                     $('#devices_table_body').append(devices);
 
                     //перерисовать пагинацию
-                    //TODO: РАЗОБРАТЬСЯ С ПЕРЕЗАПИСЬЮ data-атрибутов
                     //3 случая:
                     if(page_number == 1) {
                         //1. 1ая страница
@@ -157,18 +158,18 @@ $(function() {
                         $('#pagination_three').removeClass('active');
 
                         // - цифры и дата-пейдж 1, 2, 3
-                        //$('#pagination_one').attr('data-page', 1);
+                        $('#pagination_one').data('page', 1);
                         $('#pagination_one').children().html(1)
-                        //$('#pagination_two').attr('data-page', 2);
+                        $('#pagination_two').data('page', 2);
                         $('#pagination_two').children().html(2)
-                        //$('#pagination_three').attr('data-page', 3);
+                        $('#pagination_three').data('page', 3);
                         $('#pagination_three').children().html(3)
 
                         // - кнопка перехода вперёд: 2
-                        $('#pagination_next').attr('data-page', 2);
+                        $('#pagination_next').data('page', 2);
 
                         // - кнопка перехода в конец: последняя
-                        $('#pagination_last').attr('data-page', last_page_number);
+                        $('#pagination_last').data('page', last_page_number);
                     } else if (page_number == last_page_number) {
                         //2. последняя страница
 
@@ -186,21 +187,18 @@ $(function() {
                         $('#pagination_two').removeClass('active');
 
                         // - цифры и дата-пейдж последняя - 2, последняя - 1, последняя
-                        //$('#pagination_one').attr('data-page', last_page_number - 2);
-                        //$('#pagination_one').data('page', last_page_number - 2);
+                        $('#pagination_one').data('page', last_page_number - 2);
                         $('#pagination_one').children().html(last_page_number - 2)
-                        //$('#pagination_two').attr('data-page', last_page_number - 1);
-                        //$('#pagination_two').data('page', last_page_number - 1);
+                        $('#pagination_two').data('page', last_page_number - 1);
                         $('#pagination_two').children().html(last_page_number - 1)
-                        //$('#pagination_three').attr('data-page', last_page_number);
-                        //$('#pagination_three').data('page', last_page_number);
+                        $('#pagination_three').data('page', last_page_number);
                         $('#pagination_three').children().html(last_page_number)
 
                         // - кнопка перехода назад: последняя - 1
-                        $('#pagination_prev').attr('data-page', last_page_number - 1);
+                        $('#pagination_prev').data('page', last_page_number - 1);
 
                         // - кнопка перехода в начало: 1
-                        $('#pagination_first').attr('data-page', 1);
+                        $('#pagination_first').data('page', 1);
                     } else {
                         //3. все остальные
                         // - кнопки перехода в обе стороны разблокированы
@@ -213,23 +211,17 @@ $(function() {
                         $('#pagination_one').removeClass('active');
                         $('#pagination_three').removeClass('active');
 
-                        //$('#pagination_one').attr('data-page', page_number - 1);
-                        //$('#pagination_one').removeData('page');
-                        //$('#pagination_one').data('page', page_number - 1);
+                        $('#pagination_one').data('page', page_number - 1);
                         $('#pagination_one').children().html(page_number - 1)
-                        //$('#pagination_two').attr('data-page', page_number);
-                        //$('#pagination_two').removeData('page');
-                        //$('#pagination_two').data('page', page_number);
+                        $('#pagination_two').data('page', page_number);
                         $('#pagination_two').children().html(page_number)
-                        //$('#pagination_three').attr('data-page', page_number + 1);
-                        //$('#pagination_three').removeData('page');
-                        //$('#pagination_three').data('page', page_number + 1);
+                        $('#pagination_three').data('page', page_number + 1);
                         $('#pagination_three').children().html(page_number + 1)
 
-                        $('#pagination_first').attr('data-page', 1);
-                        $('#pagination_prev').attr('data-page', page_number - 1);
-                        $('#pagination_next').attr('data-page', page_number + 1);
-                        $('#pagination_last').attr('data-page', last_page_number);
+                        $('#pagination_first').data('page', 1);
+                        $('#pagination_prev').data('page', page_number - 1);
+                        $('#pagination_next').data('page', page_number + 1);
+                        $('#pagination_last').data('page', last_page_number);
                     }
                 }
                 else {
