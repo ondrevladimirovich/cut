@@ -67,7 +67,7 @@ $(function() {
             return;
 
         current_page_number = $(this).data('page');
-        page_size = $('#devices_per_page').val();
+        page_size = Number($('#devices_per_page').val());
 
         if(current_page_number != undefined) {
             fill_devices_table(current_page_number, page_size);
@@ -75,9 +75,34 @@ $(function() {
     });
 
     $('#devices_per_page').change(function() {
-        page_size = $('#devices_per_page').val();
+        new_page_size = Number($('#devices_per_page').val());
 
-        fill_devices_table(current_page_number, page_size);
+        if(new_page_size > page_size) {
+            let last_page_number = Math.ceil(devices_total_count / new_page_size);
+            $('#pagination_last').data('page', last_page_number);
+
+            if(current_page_number > last_page_number) {
+                current_page_number = last_page_number;
+
+                $('#pagination_prev').data('page', current_page_number - 1);
+
+                $('#pagination_one').data('page', current_page_number - 2);
+                $('#pagination_one').children().html(current_page_number - 2)
+                $('#pagination_two').data('page', current_page_number - 1);
+                $('#pagination_two').children().html(current_page_number - 1)
+                $('#pagination_three').data('page', current_page_number);
+                $('#pagination_three').children().html(current_page_number);
+
+                $('#pagination_one').removeClass('active');
+                $('#pagination_two').removeClass('active');
+                $('#pagination_three').addClass('active');
+
+                $('#pagination_next').addClass('disabled');
+                $('#pagination_last').addClass('disabled');
+            }
+        }
+
+        fill_devices_table(current_page_number, new_page_size);
     });
 
     function fill_devices_table(page_number, page_size) {
